@@ -24,7 +24,7 @@
 namespace melledijkstra\PDFMerger;
 
 use Exception;
-use fpdi\FPDI;
+use FPDI;
 
 class PDFMerger
 {
