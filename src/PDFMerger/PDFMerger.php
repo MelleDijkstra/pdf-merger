@@ -21,22 +21,22 @@
  * such as form fields, links or page annotations (anything not a part of the page content stream).
  *
  */
-namespace Clegginabox\PDFMerger;
+namespace melledijkstra\PDFMerger;
 
 use Exception;
 use fpdi\FPDI;
-use fpdf\FPDF;
 
 class PDFMerger
 {
     private $_files;    //['form.pdf']  ["1,2,4, 5-19"]
-    private $_fpdi;
 
     /**
      * Add a PDF for inclusion in the merge with a valid file path. Pages should be formatted: 1,3,6, 12-16.
-     * @param $filepath
-     * @param $pages
-     * @return void
+     * @param $filepath string The file path of the pdf to include with the merging
+     * @param string $pages Which pages should be included
+     * @param string $orientation The orientation of the PDF, can be 'P' (portrait) or 'L' (landscape)
+     * @return PDFMerger
+     * @throws Exception
      */
     public function addPDF($filepath, $pages = 'all', $orientation = null)
     {
@@ -55,10 +55,11 @@ class PDFMerger
 
     /**
      * Merges your provided PDFs and outputs to specified location.
-     * @param $outputmode
-     * @param $outputname
-     * @param $orientation
-     * @return PDF
+     * @param string $outputmode
+     * @param string $outputpath
+     * @param string $orientation
+     * @return bool|string
+     * @throws Exception
      */
     public function merge($outputmode = 'browser', $outputpath = 'newfile.pdf', $orientation = 'P')
     {
@@ -108,7 +109,7 @@ class PDFMerger
                 return true;
             } else {
                 throw new Exception("Error outputting PDF to '$outputmode'.");
-                return false;
+                // return false; unreachable
             }
         }
 
@@ -118,7 +119,7 @@ class PDFMerger
     /**
      * FPDI uses single characters for specifying the output location. Change our more descriptive string into proper format.
      * @param $mode
-     * @return Character
+     * @return string
      */
     private function _switchmode($mode)
     {
@@ -145,7 +146,8 @@ class PDFMerger
     /**
      * Takes our provided pages in the form of 1,3,4,16-50 and creates an array of all pages
      * @param $pages
-     * @return unknown_type
+     * @return array|bool
+     * @throws Exception
      */
     private function _rewritepages($pages)
     {
@@ -162,7 +164,7 @@ class PDFMerger
 
                 if ($x > $y) {
                     throw new Exception("Starting page, '$x' is greater than ending page '$y'.");
-                    return false;
+                    // return false; unreachable
                 }
 
                 //add middle pages

@@ -58,7 +58,6 @@ local.properties
 *.tlb
 *.tli
 *.tlh
-*.tmp
 *.vspscc
 .builds
 *.dotCover
@@ -163,3 +162,4 @@ pip-log.txt
 .DS_Store
 
 /vendor/
+.idea/
