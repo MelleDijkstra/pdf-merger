@@ -179,4 +179,12 @@ class PDFMerger
 
         return $newpages;
     }
+
+    /**
+     * Get the count of the files which will be merged
+     * @return int The files loaded for merge operation
+     */
+    public function fileCount() {
+        return count($this->_files);
+    }
 }
